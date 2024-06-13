@@ -9,6 +9,7 @@ dist/
 
 # Arquivos de ambiente
 .env
+data
 
 # Arquivos de log e temporários
 *.log
