@@ -5,6 +5,8 @@ import { listDevices } from "./utils/devices";
 import { sleep } from "./utils/sleep";
 import { IApplication } from "./commands/openApp";
 import { killAdbServer } from "./utils/killAdbServer";
+import tapElementByResourceId from "./commands/tapElementByResourceId";
+import dumpWindowLayout from "./commands/dumpWindowLayout";
 
 async function init() {
   try {
@@ -22,6 +24,12 @@ async function init() {
       packageName: config.app.packageName,
       activityName: config.app.activityName,
     } as IApplication);
+
+    await sleep(2000);
+    await dumpWindowLayout();
+
+    await sleep(2000);
+    await tapElementByResourceId("com.instagram.android:id/search_tab");
   } catch (error) {
     console.error("Erro:", error);
   }
