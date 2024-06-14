@@ -7,6 +7,7 @@ import { IApplication } from "./commands/openApp";
 import { killAdbServer } from "./utils/killAdbServer";
 import tapElementByResourceId from "./commands/tapElementByResourceId";
 import dumpWindowLayout from "./commands/dumpWindowLayout";
+import tapElementByContentDesc from "./commands/tapElementByContentDesc";
 
 async function init() {
   try {
@@ -29,7 +30,8 @@ async function init() {
     await dumpWindowLayout();
 
     await sleep(2000);
-    await tapElementByResourceId("com.instagram.android:id/search_tab");
+    await tapElementByContentDesc("Senha");
+    // await typeText(deviceId, password);
   } catch (error) {
     console.error("Erro:", error);
   }

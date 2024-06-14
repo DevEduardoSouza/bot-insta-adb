@@ -4,6 +4,7 @@ import parseXML from "xml2js";
 import { ICoordinates } from "../types/types";
 import clickAtPosition from "./clickAtPosition";
 import dumpWindowLayout from "./dumpWindowLayout";
+import { parseBounds } from "../utils/parseBounds";
 
 const findElementByResourceId = (node: any, resourceId: string): any | null => {
   if (node.$ && node.$["resource-id"] === resourceId) {
@@ -18,17 +19,6 @@ const findElementByResourceId = (node: any, resourceId: string): any | null => {
     }
   }
   return null;
-};
-
-const parseBounds = (bounds: string) => {
-  const matches = bounds.match(/\d+/g);
-  if (!matches) {
-    throw new Error(`Invalid bounds string: ${bounds}`);
-  }
-  const [left, top, right, bottom] = matches.map(Number);
-  const x = Math.floor((left + right) / 2);
-  const y = Math.floor((top + bottom) / 2);
-  return { x, y };
 };
 
 const getCoordinatesByResourceId = (
