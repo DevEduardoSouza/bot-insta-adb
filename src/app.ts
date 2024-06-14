@@ -1,16 +1,13 @@
+import openApp from "./commands/openApp";
 import { config } from "./config/config";
 import client from "./services/adbClient";
-import startDevice from "./services/startDevice";
 import { listDevices } from "./utils/devices";
 import { sleep } from "./utils/sleep";
+import { IApplication } from "./commands/openApp";
 
 async function init() {
   try {
-    // startDevice(config.pathDevice);
-    // await sleep(20000);
-
     const devices = await listDevices(client);
-    // console.log(devices);
 
     if (devices.length === 0) {
       console.log("No devices found, please try opening a new device");
@@ -19,7 +16,11 @@ async function init() {
       config.deviceId = devices[0].id;
     }
 
-    
+    await openApp({
+      packageName: config.app.packageName,
+      activityName: config.app.activityName,
+    } as IApplication);
+
   } catch (error) {
     console.error("Erro:", error);
   }
