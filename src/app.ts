@@ -8,6 +8,7 @@ import { killAdbServer } from "./utils/killAdbServer";
 import tapElementByResourceId from "./commands/tapElementByResourceId";
 import dumpWindowLayout from "./commands/dumpWindowLayout";
 import tapElementByContentDesc from "./commands/tapElementByContentDesc";
+import typeText from "./commands/typeText";
 
 async function init() {
   try {
@@ -31,7 +32,7 @@ async function init() {
 
     await sleep(2000);
     await tapElementByContentDesc("Senha");
-    // await typeText(deviceId, password);
+    await typeText("password");
   } catch (error) {
     console.error("Erro:", error);
   }
