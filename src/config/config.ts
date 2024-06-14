@@ -5,5 +5,8 @@ export const config = {
   app: {
     packageName: "com.instagram.android",
     activityName: "com.instagram.mainactivity.LauncherActivity",
-  }
+  },
+  textPage: {
+    login: "Nome de usuário, email ou número de celular",
+  },
 };

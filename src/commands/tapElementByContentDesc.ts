@@ -92,8 +92,7 @@ const tapElementByContentDesc = async (contentDesc: string) => {
   const coordinates = getCoordinatesByContentDesc(xmlDumpPath, contentDesc);
 
   if (!coordinates) {
-    console.error(`Element with content-desc ${contentDesc} not found.`);
-    return;
+    throw new Error(`Element with content-desc ${contentDesc} not found`);
   }
 
   const { x, y } = coordinates;

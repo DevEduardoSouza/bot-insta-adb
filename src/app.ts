@@ -5,10 +5,8 @@ import { listDevices } from "./utils/devices";
 import { sleep } from "./utils/sleep";
 import { IApplication } from "./commands/openApp";
 import { killAdbServer } from "./utils/killAdbServer";
-import tapElementByResourceId from "./commands/tapElementByResourceId";
-import dumpWindowLayout from "./commands/dumpWindowLayout";
-import tapElementByContentDesc from "./commands/tapElementByContentDesc";
-import typeText from "./commands/typeText";
+import login from "./tools/instagram/login";
+import { user } from "./data/user";
 
 async function init() {
   try {
@@ -28,11 +26,7 @@ async function init() {
     } as IApplication);
 
     await sleep(2000);
-    await dumpWindowLayout();
-
-    await sleep(2000);
-    await tapElementByContentDesc("Senha");
-    await typeText("password");
+    await login(user);
   } catch (error) {
     console.error("Erro:", error);
   }
