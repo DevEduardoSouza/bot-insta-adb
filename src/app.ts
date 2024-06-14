@@ -4,9 +4,11 @@ import client from "./services/adbClient";
 import { listDevices } from "./utils/devices";
 import { sleep } from "./utils/sleep";
 import { IApplication } from "./commands/openApp";
+import { killAdbServer } from "./utils/killAdbServer";
 
 async function init() {
   try {
+    await killAdbServer();
     const devices = await listDevices(client);
 
     if (devices.length === 0) {
@@ -20,7 +22,6 @@ async function init() {
       packageName: config.app.packageName,
       activityName: config.app.activityName,
     } as IApplication);
-
   } catch (error) {
     console.error("Erro:", error);
   }
