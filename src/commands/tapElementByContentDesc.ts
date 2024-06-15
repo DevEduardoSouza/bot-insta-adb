@@ -73,12 +73,12 @@ const getCoordinatesByContentDesc = (
       if (clickableParent && clickableParent.$ && clickableParent.$.bounds) {
         coordinates = parseBounds(clickableParent.$.bounds);
       } else {
-        console.error(
+        console.warn(
           `No clickable parent element found for content-desc "${contentDesc}"`
         );
       }
     } else {
-      console.error(
+      console.warn(
         `Element with content-desc "${contentDesc}" was not found in the XML file`
       );
     }
@@ -92,7 +92,8 @@ const tapElementByContentDesc = async (contentDesc: string) => {
   const coordinates = getCoordinatesByContentDesc(xmlDumpPath, contentDesc);
 
   if (!coordinates) {
-    throw new Error(`Element with content-desc ${contentDesc} not found`);
+    console.warn(`Element with content-desc "${contentDesc}" not found, skipping.`);
+    return;
   }
 
   const { x, y } = coordinates;

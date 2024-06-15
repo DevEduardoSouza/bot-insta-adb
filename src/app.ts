@@ -7,6 +7,8 @@ import { IApplication } from "./commands/openApp";
 import { killAdbServer } from "./utils/killAdbServer";
 import login from "./tools/instagram/login";
 import { user } from "./data/user";
+import tapElementByContentDesc from "./commands/tapElementByContentDesc";
+import dumpWindowLayout from "./commands/dumpWindowLayout";
 
 async function init() {
   try {

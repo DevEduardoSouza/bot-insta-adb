@@ -32,6 +32,14 @@ const login = async (user: IUser) => {
 
     await sleep(1500);
     await tapElementByContentDesc("Entrar");
+
+    // page save save Insta
+    await sleep(1500);
+    await tapElementByContentDesc("Agora não");
+
+    await sleep(1500);
+    await tapElementByContentDesc("Pular");
+    await sleep(1500);
   } catch (error) {
     console.log("Error Login", error);
     await captureScreenshot();
