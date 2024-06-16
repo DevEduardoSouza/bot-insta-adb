@@ -59,7 +59,7 @@ const clickRandomElement = async (resourceId: string) => {
   try {
     // Get current screen XML
     await dumpWindowLayout();
-    await sleep(3000);
+    await sleep(2000);
 
     // Read XML content
     const xmlContent = fs.readFileSync(config.xmlDumpPath, "utf-8");

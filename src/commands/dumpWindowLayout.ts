@@ -1,42 +1,48 @@
 import { exec } from "child_process";
 import { config } from "../config/config";
+import { sleep } from "../utils/sleep";
 
 const deviceId = config.deviceId;
 const localPath = config.xmlDumpPath;
 
-const dumpWindowLayout = async () => {
-  const dumpCommand = `adb ${deviceId} shell uiautomator dump /sdcard/window_dump.xml`;
-
-  try {
-    exec(dumpCommand, async (error, stdout, stderr) => {
+// Função para executar comandos do adb e retornar uma Promise
+const executeCommand = (command: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
       if (error) {
-        console.error(`Erro ao executar o comando: ${error.message}`);
-        return;
+        reject(`Erro ao executar o comando: ${error.message}`);
+      } else if (stderr) {
+        reject(`Erro do comando: ${stderr}`);
+      } else {
+        resolve(stdout);
       }
-      if (stderr) {
-        console.error(`Erro do comando: ${stderr}`);
-        return;
-      }
+    });
+  });
+};
+
+const dumpWindowLayout = async (retries = 3) => {
+  const dumpCommand = `adb ${deviceId} shell uiautomator dump /sdcard/window_dump.xml`;
+  const pullCommand = `adb ${deviceId} pull /sdcard/window_dump.xml ${localPath}`;
+
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      await executeCommand(dumpCommand);
       console.log("Layout da janela capturado.");
 
-      // Comando para baixar o arquivo XML gerado para o sistema local
-      const pullCommand = `adb ${deviceId} pull /sdcard/window_dump.xml ${localPath}`;
+      await sleep(1000); // Aguardar um pouco antes de puxar o arquivo
 
-      // Executar o comando para baixar o arquivo XML
-      exec(pullCommand, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Erro ao baixar o arquivo XML: ${error.message}`);
-          return;
-        }
-        if (stderr) {
-          console.error(`Erro do comando: ${stderr}`);
-          return;
-        }
-        console.log(`Arquivo XML salvo em: ${localPath}`);
-      });
-    });
-  } catch (error) {
-    console.error("Erro ao capturar o layout da janela:", error);
+      await executeCommand(pullCommand);
+      console.log(`Arquivo XML salvo em: ${localPath}`);
+      return; // Sucesso, sair da função
+    } catch (error) {
+      console.error(`Tentativa ${attempt} de ${retries} falhou: ${error}`);
+      if (attempt < retries) {
+        console.log("Tentando novamente...");
+        await sleep(1000); // Esperar antes de tentar novamente
+      } else {
+        console.error("Erro ao capturar o layout da janela após múltiplas tentativas:", error);
+      }
+    }
   }
 };
 
