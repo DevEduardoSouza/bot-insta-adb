@@ -11,8 +11,8 @@ const openApp = async (application: IApplication) => {
   try {
     await client.shell(config.deviceId, command);
     console.log("App opened");
-  } catch (e) {
-    console.error("Error when opening the app", e);
+  } catch (e: any) {
+    throw new Error(`Error when opening the app: ${e.message}`);
   }
 };
 

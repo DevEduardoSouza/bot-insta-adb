@@ -9,6 +9,7 @@ import login from "./tools/instagram/login";
 import { user } from "./data/user";
 import tapElementByContentDesc from "./commands/tapElementByContentDesc";
 import dumpWindowLayout from "./commands/dumpWindowLayout";
+import { searchInExplore } from "./tools/instagram/searchInExplore";
 
 async function init() {
   try {
@@ -29,6 +30,9 @@ async function init() {
 
     await sleep(2000);
     await login(user);
+
+    await sleep(2000);
+    await searchInExplore("#casa");
   } catch (error) {
     console.error("Erro:", error);
   }

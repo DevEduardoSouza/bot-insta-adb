@@ -5,6 +5,7 @@ import { ICoordinates } from "../types/types";
 import clickAtPosition from "./clickAtPosition";
 import dumpWindowLayout from "./dumpWindowLayout";
 import { parseBounds } from "../utils/parseBounds";
+import { sleep } from "../utils/sleep";
 
 const findElementByResourceId = (node: any, resourceId: string): any | null => {
   if (node.$ && node.$["resource-id"] === resourceId) {
@@ -58,6 +59,9 @@ const getCoordinatesByResourceId = (
 };
 
 const tapElementByResourceId = async (resourceId: string): Promise<void> => {
+  await dumpWindowLayout();
+  await sleep(3000);
+
   const xmlDumpPath = config.xmlDumpPath;
   const coordinates = getCoordinatesByResourceId(xmlDumpPath, resourceId);
 
