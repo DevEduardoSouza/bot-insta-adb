@@ -1,4 +1,4 @@
----
+
 
 # Instagram Automation Project
 
@@ -8,7 +8,6 @@
 
 This project is an educational initiative aimed at automating specific actions on Instagram using **ADB (Android Debug Bridge)** and **TypeScript**. It is currently a work-in-progress but already includes functionalities such as logging in and performing basic interactions on the platform.
 
----
 
 ## Features
 
